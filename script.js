@@ -497,9 +497,9 @@ function hideCompletionPopup() {
     if ((wpIndex !== -1 && wpIndex <= best.segIndex) || (isLast && nearProjected)) {
       waypointMarkers[i].crossed = true;
       waypointMarkers[i].marker.setIcon(createMarkerIcon(i + 1, "#00c853"));
-      if (isLast && nearProjected) {
-    showCompletionPopup();  // <--- Add this
-  } // turn green
+  //     if (isLast && nearProjected) {
+  //   showCompletionPopup();  // <--- Add this
+  // } // turn green
     }
   }
 });
@@ -549,7 +549,12 @@ const distanceFromPath = best.dist; // already calculated
       const pctRounded = Math.min(100, Math.max(0, percent)).toFixed(1);
       document.getElementById("progressInner").style.width = pctRounded + "%";
       document.getElementById("progressText").textContent = `${pctRounded}% • ${formatDistance(remainingMeters)} left`;
-
+ if (pctRounded >= 100) {
+   
+  showCompletionPopup();
+    // You can also trigger other logic here like stopping updates or calling a callback
+    return;
+  }
       if (lastProgressTime == null) {
         lastProgressTime = Date.now();
         lastProgressMeters = totalDist - remainingMeters;
